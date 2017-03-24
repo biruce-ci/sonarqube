@@ -24,7 +24,7 @@ import debounce from 'lodash/debounce';
 import { translate } from '../../../helpers/l10n';
 import type { Organization } from '../../../store/organizations/duck';
 import { getOrganizationByKey } from '../../../store/rootReducer';
-import { updateOrganization } from '../actions';
+import { updateOrganization } from '../store/actions';
 
 type Props = {
   organization: Organization,

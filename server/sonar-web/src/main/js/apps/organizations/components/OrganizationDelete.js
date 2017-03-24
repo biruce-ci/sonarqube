@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from '../../../helpers/l10n';
 import { getOrganizationByKey } from '../../../store/rootReducer';
-import { deleteOrganization } from '../actions';
+import { deleteOrganization } from '../store/actions';
 
 class OrganizationDelete extends React.Component {
   props: {

@@ -21,7 +21,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import OrganizationNavigation from '../navigation/OrganizationNavigation';
-import { fetchOrganization } from '../actions';
+import { fetchOrganization } from '../store/actions';
 import { getOrganizationByKey } from '../../../store/rootReducer';
 import type { Organization } from '../../../store/organizations/duck';
 import NotFound from '../../../app/components/NotFound';

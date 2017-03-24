@@ -23,7 +23,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import AllProjectsContainer from '../../projects/components/AllProjectsContainer';
 import { getOrganizationByKey } from '../../../store/rootReducer';
-import { updateOrganization } from '../actions';
+import { updateOrganization } from '../store/actions';
 import { translate } from '../../../helpers/l10n';
 
 class OrganizationProjects extends React.Component {

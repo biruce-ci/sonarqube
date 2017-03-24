@@ -18,17 +18,27 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 // @flow
-import * as api from '../../api/organizations';
-import { onFail } from '../../store/rootActions';
-import * as actions from '../../store/organizations/duck';
-import { addGlobalSuccessMessage } from '../../store/globalMessages/duck';
-import { translate, translateWithParameters } from '../../helpers/l10n';
-import type { Organization } from '../../store/organizations/duck';
+import * as api from '../../../api/organizations';
+import * as actions from '../../../store/organizations/duck';
+import * as membersActions from './membersDuck';
+import { onFail } from '../../../store/rootActions';
+import { getOrganizationMembersState } from '../../../store/rootReducer';
+import { addGlobalSuccessMessage } from '../../../store/globalMessages/duck';
+import { translate, translateWithParameters } from '../../../helpers/l10n';
+import type { Organization } from '../../../store/organizations/duck';
+
+const PAGE_SIZE = 50;
 
 const onRejected = (dispatch: Function) =>
   (error: Object) => {
     onFail(dispatch)(error);
     return Promise.reject();
+  };
+
+const onMembersFail = (organization: string, dispatch: Function) =>
+  (error: Object) => {
+    onFail(dispatch)(error);
+    dispatch(membersActions.updateState(organization, { loading: false }));
   };
 
 export const fetchOrganization = (key: string): Function =>
@@ -76,4 +86,60 @@ export const deleteOrganization = (key: string): Function =>
     };
 
     return api.deleteOrganization(key).then(onFulfilled, onFail(dispatch));
+  };
+
+export const fetchOrganizationMembers = (key: string, query?: string) =>
+  (dispatch: Function) => {
+    dispatch(membersActions.updateState(key, { loading: true }));
+    const data: Object = {
+      ps: PAGE_SIZE
+    };
+    if (key) {
+      data.organizations = key;
+    }
+    if (query) {
+      data.q = query;
+    }
+    return api.searchMembers(data).then(
+      response => {
+        dispatch(membersActions.receiveMembers(key, response.users));
+        dispatch(
+          membersActions.updateState(key, {
+            loading: false,
+            total: response.paging.total,
+            pageIndex: response.paging.pageIndex,
+            query: query || null
+          })
+        );
+      },
+      onMembersFail(key, dispatch)
+    );
+  };
+
+export const fetchMoreOrganizationMembers = (key: string, query?: string) =>
+  (dispatch: Function, getState: Function) => {
+    dispatch(membersActions.updateState(key, { loading: true }));
+    const data: Object = {
+      ps: PAGE_SIZE,
+      p: getOrganizationMembersState(getState(), key).pageIndex + 1
+    };
+    if (key) {
+      data.organizations = key;
+    }
+    if (query) {
+      data.q = query;
+    }
+    return api.searchMembers(data).then(
+      response => {
+        dispatch(membersActions.receiveMoreMembers(key, response.users));
+        dispatch(
+          membersActions.updateState(key, {
+            loading: false,
+            pageIndex: response.paging.pageIndex,
+            query: query || null
+          })
+        );
+      },
+      onMembersFail(key, dispatch)
+    );
   };

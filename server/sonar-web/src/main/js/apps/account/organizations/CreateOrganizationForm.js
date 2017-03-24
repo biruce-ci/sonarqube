@@ -24,7 +24,7 @@ import debounce from 'lodash/debounce';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from '../../../helpers/l10n';
-import { createOrganization } from '../../organizations/actions';
+import { createOrganization } from '../../organizations/store/actions';
 
 type State = {
   loading: boolean,
