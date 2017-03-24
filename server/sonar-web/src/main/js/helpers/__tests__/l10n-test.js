@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-import { resetBundle, translate, translateWithParameters } from '../l10n';
+import { resetBundle, translate, translateWithParameters, translatePlural } from '../l10n';
 
 afterEach(() => {
   resetBundle({});
@@ -71,5 +71,28 @@ describe('#translateWithParameters', () => {
     expect(translateWithParameters('random', 5)).toBe('random.5');
     expect(translateWithParameters('random', 1, 2, 3)).toBe('random.1.2.3');
     expect(translateWithParameters('composite.random', 1, 2)).toBe('composite.random.1.2');
+  });
+});
+
+describe('#translatePlural', () => {
+  beforeEach(() => {
+    resetBundle({
+      x_apple: 'I have {0} apple',
+      'x_apple.plural': 'I have {0} apples',
+      lot_of_apples: 'I have too much apples'
+    });
+  });
+
+  it('should translate singular message', () => {
+    expect(translatePlural('x_apple', 0)).toBe('I have 0 apple');
+    expect(translatePlural('x_apple', 1, 'x_apple.plural')).toBe('I have 1 apple');
+    expect(translatePlural('unknown', 1)).toBe('unknown.1');
+  });
+
+  it('should translate plural message', () => {
+    expect(translatePlural('x_apple', 5)).toBe('I have 5 apples');
+    expect(translatePlural('x_apple', 2, 'x_apple.plural')).toBe('I have 2 apples');
+    expect(translatePlural('x_apple', 5, 'lot_of_apples')).toBe('I have too much apples');
+    expect(translatePlural('unknown', 3)).toBe('unknown.plural.3');
   });
 });

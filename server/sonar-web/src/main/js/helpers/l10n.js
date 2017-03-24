@@ -39,6 +39,14 @@ export function translateWithParameters(messageKey: string, ...parameters: Array
   }
 }
 
+export function translatePlural(key: string, parameter: number, pluralKey?: string) {
+  if (parameter > 1) {
+    return translateWithParameters(pluralKey || (key + '.plural'), parameter);
+  } else {
+    return translateWithParameters(key, parameter);
+  }
+}
+
 export function hasMessage(...keys: string[]) {
   const messageKey = keys.join('.');
   return messages[messageKey] != null;

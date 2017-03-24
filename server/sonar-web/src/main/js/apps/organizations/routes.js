@@ -25,6 +25,7 @@ import OrganizationFavoriteProjects from './components/OrganizationFavoriteProje
 import OrganizationAdmin from './components/OrganizationAdmin';
 import OrganizationEdit from './components/OrganizationEdit';
 import OrganizationGroups from './components/OrganizationGroups';
+import OrganizationMembersContainer from './components/OrganizationMembersContainer';
 import OrganizationPermissions from './components/OrganizationPermissions';
 import OrganizationPermissionTemplates from './components/OrganizationPermissionTemplates';
 import OrganizationProjectsManagement from './components/OrganizationProjectsManagement';
@@ -35,6 +36,7 @@ export default (
     <IndexRedirect to="projects" />
     <Route path="projects" component={OrganizationProjects} />
     <Route path="projects/favorite" component={OrganizationFavoriteProjects} />
+    <Route path="members" component={OrganizationMembersContainer} />
     <Route component={OrganizationAdmin}>
       <Route path="delete" component={OrganizationDelete} />
       <Route path="edit" component={OrganizationEdit} />

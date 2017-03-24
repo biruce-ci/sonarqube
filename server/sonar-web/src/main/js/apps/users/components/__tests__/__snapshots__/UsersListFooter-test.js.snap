@@ -1,0 +1,7 @@
+exports[`test should render correctly 1`] = `
+<ListFooter
+  count={3}
+  loadMore={[Function]}
+  ready={true}
+  total={5} />
+`;

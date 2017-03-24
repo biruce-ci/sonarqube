@@ -1,0 +1,59 @@
+exports[`test should render its children 1`] = `
+<header
+  className="page-header">
+  <h1
+    className="page-title">
+    users.page
+  </h1>
+  <i
+    className="spinner" />
+  <span>
+    children test
+  </span>
+  <div
+    className="page-description">
+    users.page.description
+  </div>
+  <span
+    className="page-totalcount">
+    <strong>
+      5
+    </strong>
+     
+    organization.members.members.5
+  </span>
+</header>
+`;
+
+exports[`test should render the members page header for an organization 1`] = `
+<header
+  className="page-header">
+  <span
+    className="page-totalcount">
+    <strong>
+      5
+    </strong>
+     
+    organization.members.members.5
+  </span>
+</header>
+`;
+
+exports[`test should render the users page header 1`] = `
+<header
+  className="page-header">
+  <h1
+    className="page-title">
+    users.page
+  </h1>
+  <div
+    className="page-description">
+    users.page.description
+  </div>
+</header>
+`;
+
+exports[`test should render the users page header 2`] = `
+<i
+  className="spinner" />
+`;
